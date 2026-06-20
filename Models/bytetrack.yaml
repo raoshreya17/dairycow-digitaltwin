@@ -1,0 +1,32 @@
+%%writefile bytetrack.yaml
+# Default ByteTrack configuration for YOLO tracking
+# Reference: https://github.com/ifzhang/ByteTrack
+
+# Detection confidence threshold for first association
+track_thresh: 0.5
+
+# Detection confidence threshold for second association
+match_thresh: 0.8
+
+# Minimum detection confidence to start a new track
+track_buffer: 30
+
+# Number of frames to keep a lost track before removing it
+track_buffer_size: 30
+
+# Motion model parameters
+min_box_area: 10
+mot20: False
+
+# IOU thresholds for association
+iou_thresh: 0.3
+high_thresh: 0.6
+
+# Use camera motion compensation (False for static CCTV)
+cmc: False
+
+# Re-ID feature usage (if supported by detector)
+with_reid: False
+
+# Visualization parameters (optional)
+frame_rate: 30
