@@ -1,0 +1,38 @@
+# Core
+numpy>=1.24
+pandas>=2.0
+scipy>=1.11
+scikit-learn>=1.5
+matplotlib>=3.7
+
+# Computer vision
+opencv-python-headless>=4.10
+ultralytics>=8.3
+
+# Deep learning
+torch>=2.0
+torchvision>=0.15
+torchmetrics>=1.4
+
+# Transformers / TimeSformer
+transformers==4.41.2
+huggingface_hub>=0.23
+
+# Video decoding
+decord==0.6.0
+
+# Tracking
+supervision>=0.21
+
+# Data augmentation (used in YOLOv11 training)
+albumentations>=1.4.8
+
+# Notebook / Colab
+jupyter>=1.0
+ipywidgets>=8.0
+
+# Milk yield data loading
+xlrd>=2.0
+
+# Model weight download
+huggingface_hub>=0.23
