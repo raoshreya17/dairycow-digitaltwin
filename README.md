@@ -2,8 +2,6 @@
 
 AI-driven digital twin of dairy cows integrating behaviour perception, nutrition modelling, and closed-loop feeding management. Developed at Dalhousie University (Ruminant Animal Centre, Truro NS, March 2025).
 
-Associated publication: Rao, Garcia & Neethirajan (2026), *npj Veterinary Sciences* 1:3. DOI: [10.1038/s44433-026-00004-x](https://doi.org/10.1038/s44433-026-00004-x)
-
 ---
 
 ## Overview
