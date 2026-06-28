@@ -126,6 +126,6 @@ xlrd                 # reading .xls milk yield files
 ## Model Weights
 
 TimeSformer fine-tuned checkpoint (1.4 GB):
-https://huggingface.co/mooanalytica/timesformer-dairy-cows
+https://huggingface.co/shreyayayay/timesformer-dairy-cows
 
 Download and place at the path set in MODEL_DIR in pipeline.py.
