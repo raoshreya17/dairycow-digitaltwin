@@ -8,10 +8,10 @@ AI-driven digital twin of dairy cows integrating behaviour perception, nutrition
 
 The system processes continuous barn CCTV video through a four-stage pipeline:
 
-1. **Detection** — YOLOv11 detects individual Holstein cows in each frame (mAP@50 = 0.994)
-2. **Tracking** — ByteTrack with stall zone anchoring maintains per-cow identity across sessions
-3. **Classification** — TimeSformer classifies seven behaviour classes (accuracy 85.8%, macro-F1 0.836, 22.6 fps)
-4. **Nutrition + Control** — Michaelis-Menten DMI estimation with proportional feedback controller for per-cow feed allocation
+1. **Detection** - YOLOv11 detects individual Holstein cows in each frame (mAP@50 = 0.994)
+2. **Tracking** - ByteTrack with stall zone anchoring maintains per-cow identity across sessions
+3. **Classification** - TimeSformer classifies seven behaviour classes (accuracy 85.8%, macro-F1 0.836, 22.6 fps)
+4. **Nutrition + Control** - Michaelis-Menten DMI estimation with proportional feedback controller for per-cow feed allocation
 
 ---
 
@@ -93,8 +93,8 @@ Seven classes recognised by TimeSformer and SlowFast:
 | Component | Metric | Value |
 |-----------|--------|-------|
 | YOLOv11 detection | mAP@50 | 0.994 |
-| TimeSformer classification | Overall accuracy | **85.8%** |
-| TimeSformer classification | Macro-F1 | **0.836** |
+| TimeSformer classification | Overall accuracy | 85.8% |
+| TimeSformer classification | Macro-F1 | 0.836 |
 | TimeSformer classification | Daytime accuracy (n=670) | 88.2% |
 | TimeSformer classification | Nighttime accuracy (n=449) | 81.5% |
 | TimeSformer classification | mAP (macro) | 89.0% |
@@ -102,14 +102,14 @@ Seven classes recognised by TimeSformer and SlowFast:
 | SlowFast classification | Macro-F1 | 0.821 |
 | Combined pipeline | Throughput | 77.4 fps (daytime) |
 | Combined pipeline | Latency | 180 ms per frame |
-| M-M DMI model (whole-dataset) | MAPE | **3.2%** |
-| M-M DMI model (whole-dataset) | R² | **0.770** |
-| M-M DMI model (Km) | Half-saturation constant | **30 min/day** |
+| M-M DMI model (whole-dataset) | MAPE | 3.2% |
+| M-M DMI model (whole-dataset) | R² | 0.770 |
+| M-M DMI model (Km) | Half-saturation constant | 30 min/day |
 | Regression DMI model (LOCO, 16 cows) | MAPE | 5.8% |
 | Regression DMI model (LOCO, 16 cows) | R² | 0.313 |
-| Controller (500 runs, 17% model-plant mismatch) | Convergence rate | **100%** |
-| Controller | Median recovery time | **3.0 days** |
-| Controller | 95th-percentile recovery time | **7.0 days** |
+| Controller (500 runs, 17% model-plant mismatch) | Convergence rate | 100% |
+| Controller | Median recovery time | 3.0 days |
+| Controller | 95th-percentile recovery time | 7.0 days |
 
 ---
 
