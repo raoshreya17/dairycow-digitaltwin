@@ -1,0 +1,55 @@
+name: mooanalytica
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10
+  - pip
+
+  # Deep learning
+  - pytorch=2.0.1
+  - torchvision=0.15.2
+  - torchaudio=2.0.2
+  - pytorch-cuda=11.7
+
+  # Core scientific
+  - numpy=1.24.3
+  - pandas=2.0.3
+  - scipy=1.11.1
+  - matplotlib=3.7.2
+  - scikit-learn=1.3.0
+
+  # Notebook
+  - jupyter=1.0.0
+  - ipykernel=6.25.0
+
+  - pip:
+    # Computer vision
+    - ultralytics==8.0.196       # YOLOv11
+    - supervision==0.16.0        # ByteTrack
+    - opencv-python==4.8.0.76
+    - decord==0.6.0              # video decoding
+
+    # Transformers / HuggingFace
+    - transformers==4.41.2       # TimeSformer
+    - huggingface-hub==0.23.0
+    - tokenizers==0.19.1
+    - accelerate==0.30.0
+
+    # Metrics
+    - torchmetrics==1.4.0
+
+    # Data
+    - xlrd==2.0.1                # .xls milk yield files
+    - openpyxl==3.1.2
+    - tqdm==4.66.1
+
+    # Augmentation
+    - albumentations==1.4.8
+    - albucore==0.0.14
+
+    # Explainability
+    - grad-cam==1.5.0
