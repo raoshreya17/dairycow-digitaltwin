@@ -1,12 +1,6 @@
-# MooAnalytica — Examination Committee Data Package
-
 **Thesis:** An AI-Driven Behavioural Perception and Nutrition Modelling Framework as the Behavioural State Layer of a Dairy Cattle Digital Twin  
-**Author:** Shreya Rao, MCS Candidate, Dalhousie University  
-**Supervisor:** Dr. Suresh Neethirajan  
-**Defence date:** July 29, 2026  
-**Associated publication:** Rao, Garcia & Neethirajan (2026), *npj Veterinary Sciences* 1:3. DOI: 10.1038/s44433-026-00004-x
 
-This folder contains all materials required to understand, verify, and reproduce the results reported in the thesis. It is shared exclusively with the examination committee for internal review and is not intended for public distribution.
+This folder contains all annotated data.
 
 ---
 
@@ -26,7 +20,7 @@ MooAnalytica_ExaminerPackage/
 │   │   └── Standing/
 │   ├── train_aug/                     Augmented training set — 9,652 clips, 21.8 GB
 │   │   └── (same 7 class subfolders)
-│   └── val/                           Validation set — 1,119 clips, ~31.7 GB
+│   └── val/                           Validation set - 1,119 clips
 │       └── (same 7 class subfolders)
 │
 ├── processedData/                     Processed tabular datasets for nutrition modelling
@@ -54,7 +48,7 @@ MooAnalytica_ExaminerPackage/
 
 | Class | Description |
 |-------|-------------|
-| Drinking | At water trough |
+| Drinking | Face in water trough |
 | Feeding & Lying | Active feeding, lying posture |
 | Feeding & Standing | Active feeding at bunk, standing |
 | Lying | Resting, no feeding or rumination |
@@ -94,25 +88,6 @@ MooAnalytica_ExaminerPackage/
 
 ---
 
-## Reproduction Instructions
-
-All code: **https://github.com/raoshreya17/dairycow-digitaltwin**
-
-### Behaviour classification
-1. Place `last.pt` at the path set in `Pipeline/pipeline.py`
-2. Run `Pipeline/Complete_pipeline_with_TimeSformer.ipynb`
-3. For robustness evaluation: `Evaluation/RobustnessDayNight.ipynb` (needs `val/` + `ts_y_pred.npy`)
-
-### Nutrition modelling
-1. Place `feeding_behaviour_153days.csv` at path set in `Nutrition/NutritionModel.ipynb`
-2. Run all cells — expected: Km=30, MAPE=3.2%, R²=0.770, LOCO MAPE=5.8%, R²=0.313
-
-### Controller simulation
-1. Run `Nutrition/controller_simulation_final.ipynb` — fully self-contained, no data files needed
-2. Expected: 100% convergence within 14 days, median recovery 3.0 days (500 runs)
-
----
-
 ## Software Dependencies
 
 ```
@@ -128,9 +103,3 @@ numpy, pandas, scipy, matplotlib, scikit-learn
 Full environment: `environment.yml` in the GitHub repository.
 
 ---
-
-## Contact
-
-**Shreya Rao** — shreya.rao@dal.ca  
-**Dr. Suresh Neethirajan** (Supervisor) — suresh.neethirajan@dal.ca  
-Dalhousie University, Faculty of Agriculture, Truro NS
