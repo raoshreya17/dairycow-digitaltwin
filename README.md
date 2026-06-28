@@ -1,11 +1,15 @@
-# dairycow-digitaltwin — MooAnalytica
+# dairycow-digitaltwin - MooAnalytica
 
 AI-driven digital twin of dairy cows integrating behaviour perception, nutrition modelling, and closed-loop feeding management. Developed at Dalhousie University (Ruminant Animal Centre, Truro NS, March 2025).
+
+Associated publication: Rao, Garcia & Neethirajan (2026), *npj Veterinary Sciences* 1:3. DOI: [10.1038/s44433-026-00004-x](https://doi.org/10.1038/s44433-026-00004-x)
+
 ---
 
 ## Overview
 
 The system processes continuous barn CCTV video through a four-stage pipeline:
+
 1. **Detection** — YOLOv11 detects individual Holstein cows in each frame (mAP@50 = 0.994)
 2. **Tracking** — ByteTrack with stall zone anchoring maintains per-cow identity across sessions
 3. **Classification** — TimeSformer classifies seven behaviour classes (accuracy 85.8%, macro-F1 0.836, 22.6 fps)
@@ -14,6 +18,7 @@ The system processes continuous barn CCTV video through a four-stage pipeline:
 ---
 
 ## Repository Structure
+
 ```
 dairycow-digitaltwin/
 ├── Detection/              YOLOv11 training and inference (2308 images, Holstein RAC dataset)
@@ -48,6 +53,7 @@ dairycow-digitaltwin/
 ---
 
 ## Pipeline
+
 ```
 CCTV video (1920×1080, 24 fps)
     │
@@ -115,9 +121,9 @@ The `Nutrition/` folder contains the full Chapter 6 analysis across 16 cows, 153
 
 Three models evaluated:
 
-- **Linear baseline** — `DMI = k × feeding_min` (MAPE 15.0% local refit; 31.8% Johnston & DeVries 2018 transfer)
-- **Pooled regression (LOCO)** — `DMI = a + b×feeding_min + c×BW + d×FCM`, LOCO MAPE 5.8%, R²=0.313
-- **Michaelis-Menten** — `DMI = DMI_MAX × f / (Km + f)`, Km=30 min/day, MAPE=3.2%, R²=0.770
+- Linear baseline — `DMI = k × feeding_min` (MAPE 15.0% local refit; 31.8% Johnston & DeVries 2018 transfer)
+- Pooled regression (LOCO) — `DMI = a + b×feeding_min + c×BW + d×FCM`, LOCO MAPE 5.8%, R²=0.313
+- Michaelis-Menten — `DMI = DMI_MAX × f / (Km + f)`, Km=30 min/day, MAPE=3.2%, R²=0.770
 
 Closed-loop proportional feedback controller (model-plant mismatch: plant Km=35, estimator Km=30):
 
@@ -143,7 +149,7 @@ Download `last.pt` and set `MODEL_DIR` in `Pipeline/pipeline.py` accordingly.
 
 ## Data
 
-RAC barn video is not publicly released. The annotated clip dataset (4,964 clips, train/val/train_aug) and processed CSVs are available via a shared Dropbox folder.
+RAC barn video is not publicly released due to institutional data agreements. The annotated clip dataset (4,964 clips, train/val/trainaug) and processed CSVs are available to examination committee members via the shared Dropbox folder. Additional data available from the corresponding author on request.
 
 ---
 
@@ -191,81 +197,3 @@ xlrd                 # .xls milk yield files
 ## License
 
 MIT — see [LICENSE](LICENSE)
-    v
-Feeding recommendations → Unity 3D HMI
-```
-
-## Behaviour Classes
-
-Seven classes recognised by TimeSformer:
-
-| Class | Description |
-| Feeding & Standing | Active feeding at the bunk, standing posture |
-| Feeding & Lying | Active feeding, lying posture |
-| Drinking | At water trough |
-| Lying | Resting, no feeding |
-| Standing | Stationary, not feeding |
-| Ruminating & Standing | Jaw movement, standing |
-| Ruminating & Lying | Jaw movement, lying |
-
-## Performance
-
-| Component | Metric | Value |
-| YOLOv11 detection | mAP@50 | 0.994 |
-| TimeSformer classification | Overall accuracy | 85.0% |
-| TimeSformer classification | Macro-F1 | 0.841 |
-| Combined pipeline | Throughput | 77.4 fps (daytime) |
-| Combined pipeline | Latency | 180 ms per frame |
-| M-M DMI model (5 cows, 55 days) | RMSE | 0.606 kg DM/day |
-| M-M DMI model (5 cows, 55 days) | MAPE | 1.5% |
-| Regression DMI model (16 cows, LOCO) | MAPE | 5.8% |
-| Controller convergence | Recovery time | 2–8 days |
-
-## Nutrition Module
-
-The `Nutrition/` folder contains Chapter 6 of the thesis in full.
-
-Three models are evaluated against NRC (2001) as physiological reference across 16 cows, 153 cow-days (March 2025, RAC facility, Truro NS):
-
-- **Linear baseline** — `DMI = k * feeding_min`, k refit locally (MAPE 15.0%) and from Johnston & DeVries 2018 (MAPE 31.8%)
-- **Pooled regression** — `DMI = a + b*feeding_min + c*BW + d*ECM`, primary model, LOCO MAPE 5.8%
-- **Michaelis-Menten** — `DMI = DMI_MAX * f / (Km + f)`, per-cow ceiling, Km=40 min/day, MAPE 1.3% (whole-dataset)
-
-Closed-loop proportional feedback controller:
-
-```
-u(t+1) = clip( u(t) + K * e(t) * [|e(t)| > delta],  u_min,  u_max )
-K = 0.5,  delta = 0.5 kg DM/day,  u in [15, 28] kg DM/day
-```
-
-## Data
-
-The RAC barn video dataset is not publicly available due to institutional data agreements. The pipeline CSV outputs (behavioural timelines, DMI estimates, model results) used in the paper are available on request.
-
-Cow physiological parameters (BW, DIM, fat%, protein%, parity) for the 17-cow study cohort are hardcoded in `Nutrition/chapter6_mm_complete.py`. Milk yield records are read from the milking system Excel export (`Copy of milk yield.xls`).
-
-## Hardware
-
-All video inference was run on a cloud GPU instance (NVIDIA RTX PRO 4000, 23.9 GB VRAM, CUDA 13.0, AMD EPYC 7B13 CPU, 64.4 GB RAM) provisioned through Vast AI. Total compute cost for the 11-day, 5-cow dataset was approximately $32 USD.
-
-## Dependencies
-
-```
-python >= 3.10
-torch >= 2.0
-ultralytics          # YOLOv11
-transformers         # TimeSformer, HuggingFace
-supervision          # ByteTrack
-numpy
-pandas
-scipy
-matplotlib
-scikit-learn
-xlrd                 # reading .xls milk yield files
-```
-## Model Weights
-
-TimeSformer fine-tuned checkpoint (1.4 GB):
-https://huggingface.co/shreyayayay/timesformer-dairy-cows
-
-Download and place at the path set in MODEL_DIR in pipeline.py.
